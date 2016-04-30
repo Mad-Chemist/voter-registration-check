@@ -6,6 +6,7 @@
 	<title>Hello World!</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
+	<!-- <script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script> -->
 	<style>
 		body {
 			app-region: drag;
@@ -48,6 +49,56 @@
 		<button type="submit" class="btn btn-primary">Save</button>
 	</form>
 </div>
+
+<script>
+	var LS_VOTER = 'voter';
+	var $ = require('jquery');
+	var electron = require('electron');
+	$(document).ready(function() {
+		function prePopuplate() {
+			if (localStorage[LS_VOTER].length > 0) {
+				var dataObj = JSON.parse(localStorage[LS_VOTER]);
+				Object.keys(dataObj).forEach(function(key) {
+					if ($('#' + key)) {
+						$('#' + key).val(dataObj[key]);
+					}
+				});
+			}
+		};
+
+		function formValidation() {
+			var passes = true;
+			$('form input').each(function() {
+				$(this).css('border', '');
+				if ($(this).val() === "" || $(this).is('#birthdate') && $(this).val().split('/').length !== 3) {
+					passes = false
+					$(this).css('border', '1px red solid');
+				}
+			});
+			return passes;
+		};
+
+		function extractFormObject() {
+			var data = {};
+			
+			$('form input').each(function() {
+				data[$(this).attr('id')] = $(this).val();
+			});
+
+			localStorage[LS_VOTER] = JSON.stringify(data);
+			return data;
+		};
+
+		$('form').on('submit', function(event) {
+			event.preventDefault();
+			if (formValidation() === true) {
+				electron.ipcRenderer.send('save-voter', extractFormObject());
+			}
+		});
+
+		prePopuplate();
+	});
+</script>
 </body>
 
 </html>

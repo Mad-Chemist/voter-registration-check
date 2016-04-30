@@ -1,6 +1,10 @@
+'use strict';
+
+// const spawn = require('electron-spawn')
 const electron = require('electron');
 const app = electron.app;  // Module to control application life.
 const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
+const seleniumRunner = require('./app/run-selenium.js');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -18,16 +22,14 @@ app.on('window-all-closed', function() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({frame:false, resizable: false, width: 800, height: 600});
+  mainWindow = new BrowserWindow({frame:false, resizable: false, width: 800, height: 600}); // Create the browser window.
+  mainWindow.loadURL('file://' + __dirname + '/app/index.html'); // and load the index.html of the app.
+  
+  mainWindow.webContents.openDevTools(); // Open the DevTools.
 
-  // and load the index.html of the app.
-  mainWindow.loadURL('file://' + __dirname + '/index.html');
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
-
-  console.log(document);
+  electron.ipcMain.on('save-voter', function(event, voterInfo) {
+    seleniumRunner.init(null, voterInfo);
+  });
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {

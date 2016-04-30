@@ -1,5 +1,3 @@
-'use strict';
-
  /*
   * Made to accept userInfo input and state vars, and pass them along to dynamically run selenium script
   * 
@@ -17,14 +15,13 @@ var userInfo = {
 	'birthdate': '09/06/1954'
 };
 
-
 var seleniumCallback = function(error, child) {
 	if (error) {
 		console.error(error);
 	}
 
 	try {
-		var options = { desiredCapabilities: { browserName: 'phantomjs' } };
+		var options = { desiredCapabilities: { browserName: 'chrome' } };
 		var client = webdriverio.remote(options);
 
 		state.verifyRegistration(client.init(), userInfo)
@@ -41,7 +38,7 @@ var seleniumCallback = function(error, child) {
 	}
 };
 
-var seleniumSetup = function(state, userInfo) {
+var seleniumSetup = function(state, submittedUserInfo) {
 	selenium.install({
 		baseURL: 'https://selenium-release.storage.googleapis.com',
 		drivers: {
@@ -55,9 +52,8 @@ var seleniumSetup = function(state, userInfo) {
 			}
 		}
 	}, function() {
-		if (userInfo) {
-			console.log(userInfo);
-			userInfo = userInfo;
+		if (submittedUserInfo) {
+			userInfo = submittedUserInfo;
 		}
 
 		selenium.start(seleniumCallback);
