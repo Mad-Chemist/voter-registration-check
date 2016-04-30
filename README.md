@@ -3,5 +3,7 @@
 
 
 cd voter-registration-check
+
 npm install
+
 node index.js
