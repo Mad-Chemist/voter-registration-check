@@ -2,11 +2,13 @@
   "name": "registration-check",
   "version": "0.0.0",
   "description": "Selenium based driver to check voter registration",
-  "main": "index.js",
+  "main": "spawn-form.js",
   "author": "Vico Bertogli III",
   "license": "MIT",
   "devDependencies": {
     "selenium-standalone": "^5.1.0",
-    "webdriverio": "^4.0.5"
+    "webdriverio": "^4.0.5",
+    "electron-prebuilt": "^0.37.8",
+    "electron-spawn": "^4.1.1"
   }
 }

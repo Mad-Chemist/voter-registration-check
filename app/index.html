@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Hello World!</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
+	<style>
+		body {
+			app-region: drag;
+			-webkit-app-region: drag;
+		}
+		button, input {
+			app-region: no-drag;
+			-webkit-app-region: no-drag;
+		}
+		form {
+			margin:1em 0px;
+		}
+		form .bg-primary {
+			padding:.25em;
+		}
+	</style>
+</head>
+
+<body>
+<div class="container-fluid">
+	<form>
+		<h4 class="bg-primary text-center">Please fill out the information below, as its needed to determine your voter registration status for Indiana.</h4>
+		<div class="form-group">
+			<label for="firstName">First Name</label>
+			<input type="text" class="form-control" id="firstName" placeholder="First Name">
+		</div>
+		<div class="form-group">
+			<label for="lastName">Last Name</label>
+			<input type="text" class="form-control" id="lastName" placeholder="Last Name">
+		</div>
+		<div class="form-group">
+			<label for="county">County</label>
+			<input type="text" class="form-control" id="county" placeholder="County">
+		</div>
+		<div class="form-group">
+			<label for="birthdate">Birthdate (MM/DD/YYYY)</label>
+			<input type="text" class="form-control" id="birthdate" placeholder="Birthdate">
+		</div>
+
+		<button type="submit" class="btn btn-primary">Save</button>
+	</form>
+</div>
+</body>
+
+</html>
