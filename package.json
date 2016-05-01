@@ -1,8 +1,8 @@
 {
-  "name": "registration-check",
-  "version": "0.0.0",
+  "name": "buildPrch",
+  "version": "1.0.0",
   "description": "Selenium based driver to check voter registration",
-  "main": "app/main/main.js",
+  "main": "build.js",
   "author": {
     "name": "Vico Bertogli III",
     "email": "th@css.expert",
@@ -14,11 +14,11 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "selenium-standalone": "^5.1.0",
-    "webdriverio": "^4.0.5",
-    "phantomjs-prebuilt": "^2.1.7",
-    "electron-prebuilt": "^0.37.8",
-    "jquery": "^2.2.3",
-    "q": "^1.4.1"
+    "electron-packager": "6.0.0"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/electron ./app",
+    "build": "node build.js",
+    "dist": "node build.js"
   }
 }

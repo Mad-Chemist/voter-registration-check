@@ -1,0 +1,27 @@
+{
+  "name": "prch",
+  "version": "1.0.0",
+  "description": "Political Registration CHeck ~ A selenium driven application to assist in checking voter registration status.",
+  "main": "main/main.js",
+  "author": {
+    "name": "Vico Bertogli III",
+    "email": "th@css.expert",
+    "url": "http://www.css.expert/"
+  },
+  "contributors": [
+    "Vico Bertogli III <th@css.expert> (https://github.com/mad-chemist)",
+    "Francis Kabinoff <francis.kabinoff@gmail.com> (https://github.com/fkabinoff)"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "selenium-standalone": "^5.1.0",
+    "webdriverio": "^4.0.5",
+    "phantomjs-prebuilt": "^2.1.7",
+    "electron-prebuilt": "^0.37.8",
+    "jquery": "^2.2.3",
+    "q": "^1.4.1"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/electron ."
+  }
+}

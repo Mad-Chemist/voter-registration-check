@@ -2,8 +2,6 @@
   * Made to accept userInfo input and state vars, and pass them along to dynamically run selenium script
   */
 
-'use strict';
-
 const state = require('./states/indiana.js');
 const selenium = require('selenium-standalone');
 const webdriverio = require('webdriverio');

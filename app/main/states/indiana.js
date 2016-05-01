@@ -1,5 +1,3 @@
-'use strict';
-
 const Q = require('q');
 const URL = "https://indianavoters.in.gov/PublicSite/Public/FT1/PublicLookupMain.aspx?Link=Registration";
 const INFO = {
