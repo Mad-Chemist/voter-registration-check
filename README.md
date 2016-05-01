@@ -20,7 +20,7 @@ node index.js
 # Known ToDos:
 
 * Make WebDriverIO use headless phantomJS
-  * Right now, binary path points to .exe Windows binary, so only works on Windows
+  * This branch addressess this
 * Use Electron to generate exe / dmg / app files to run application on click
   * Ideally application would just be an icon in taskbar, option to update voter information would spawn current spawn-form.js
   * Ideally application would run on state's script on a timer, and throw notification if user becomes unregistered

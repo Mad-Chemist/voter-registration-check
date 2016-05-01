@@ -7,7 +7,7 @@
 var state = require('./states/indiana.js');
 var selenium = require('selenium-standalone');
 var webdriverio = require('webdriverio');
-var exec = require('child_process').exec;
+var phantomPath = require('phantomjs-prebuilt').path;
 
 var userInfo = {
 	'county': 'Knox',
@@ -57,7 +57,7 @@ var seleniumSetup = function(state, submittedUserInfo) {
 		}
 
 		selenium.start({
-			seleniumArgs: ["-Dphantomjs.binary.path=" + __dirname + "\\..\\node_modules\\phantomjs-prebuilt\\lib\\phantom\\bin\\phantomjs.exe"]
+			seleniumArgs: ["-Dphantomjs.binary.path=" + phantomPath]
 		},seleniumCallback);
 	});
 };
