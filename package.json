@@ -17,7 +17,7 @@
     "electron-packager": "6.0.0"
   },
   "scripts": {
-    "start": "./node_modules/.bin/electron ./app",
+    "start": "./app/node_modules/.bin/electron ./app",
     "build": "node build.js",
     "dist": "node build.js"
   }
