@@ -2,7 +2,7 @@
   "name": "registration-check",
   "version": "0.0.0",
   "description": "Selenium based driver to check voter registration",
-  "main": "spawn-form.js",
+  "main": "app/main/main.js",
   "author": "Vico Bertogli III",
   "license": "MIT",
   "devDependencies": {
