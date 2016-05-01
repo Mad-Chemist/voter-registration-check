@@ -8,6 +8,7 @@
   "devDependencies": {
     "selenium-standalone": "^5.1.0",
     "webdriverio": "^4.0.5",
+    "phantomjs-prebuilt": "^2.1.7",
     "electron-prebuilt": "^0.37.8",
     "jquery": "^2.2.3"
   }
