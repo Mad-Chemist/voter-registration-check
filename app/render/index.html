@@ -20,7 +20,7 @@
 			margin:1em 0px;
 		}
 		form .bg-primary {
-			padding:.25em;
+			padding:.75em .25em;
 		}
 	</style>
 </head>
@@ -28,25 +28,40 @@
 <body>
 <div class="container-fluid">
 	<form>
-		<h4 class="bg-primary text-center">Please fill out the information below, as its needed to determine your voter registration status for Indiana.</h4>
-		<div class="form-group">
+		<div class="col-sm-12">
+			<h4 class="bg-primary text-center">Enter your voter information below to check your voter registration status</h4>
+		</div>
+		<div class="form-group col-sm-6">
+			<label for="state">State</label>
+			<select class="form-control" id="state" placeholder="Choose your state" disabled>
+				<option value="Indiana">Indiana</option>
+			</select>
+		</div>
+		<div class="form-group col-sm-6">
+			<label for="party">Party</label>
+			<select class="form-control" id="party" placeholder="Choose your party" disabled>
+				<option value="Democrat">Democrat</option>
+			</select>
+		</div>
+		<div class="form-group col-sm-12">
 			<label for="firstName">First Name</label>
 			<input type="text" class="form-control" id="firstName" placeholder="First Name">
 		</div>
-		<div class="form-group">
+		<div class="form-group col-sm-12">
 			<label for="lastName">Last Name</label>
 			<input type="text" class="form-control" id="lastName" placeholder="Last Name">
 		</div>
-		<div class="form-group">
+		<div class="form-group col-sm-12">
 			<label for="county">County</label>
 			<input type="text" class="form-control" id="county" placeholder="County">
 		</div>
-		<div class="form-group">
+		<div class="form-group col-sm-12">
 			<label for="birthdate">Birthdate (MM/DD/YYYY)</label>
 			<input type="text" class="form-control" id="birthdate" placeholder="Birthdate">
 		</div>
-
-		<button type="submit" class="btn btn-primary">Save</button>
+		<div class="form-group col-sm-12">
+			<button type="submit" class="btn btn-primary">Verify</button>
+		</div>
 	</form>
 </div>
 
@@ -64,7 +79,7 @@
 					}
 				});
 			}
-		};
+		}
 
 		function formValidation() {
 			var passes = true;
@@ -76,7 +91,7 @@
 				}
 			});
 			return passes;
-		};
+		}
 
 		function extractFormObject() {
 			var data = {};
@@ -87,7 +102,20 @@
 
 			localStorage[LS_VOTER] = JSON.stringify(data);
 			return data;
-		};
+		}
+
+		function displayVoterStatus(event, status) {
+			var $container = $('.container-fluid');
+			var message = status ? "You are registered Democrat" : "You are not registered.";
+			var template = '<h4 id="resolution" class="text-center"></h4>';
+			
+			$container.find('form').hide();
+			$container.find('#resolution').remove();
+			$container.append(template);
+			$container.find('#resolution')
+				.addClass(status ? "bg-success" : "bg-error")
+				.text(message);
+		}
 
 		$('form').on('submit', function(event) {
 			event.preventDefault();
@@ -96,6 +124,7 @@
 			}
 		});
 
+		electron.ipcRenderer.on('display-status', displayVoterStatus);
 		prePopuplate();
 	});
 </script>
