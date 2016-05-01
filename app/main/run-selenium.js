@@ -7,6 +7,7 @@
 var state = require('./states/indiana.js');
 var selenium = require('selenium-standalone');
 var webdriverio = require('webdriverio');
+var phantomPath = require('phantomjs-prebuilt').path;
 
 var userInfo = {
 	'county': 'Knox',
@@ -21,9 +22,8 @@ var seleniumCallback = function(error, child) {
 	}
 
 	try {
-		var options = { desiredCapabilities: { browserName: 'chrome' } };
+		var options = { desiredCapabilities: { browserName: 'phantomjs' } };
 		var client = webdriverio.remote(options);
-
 		state.verifyRegistration(client.init(), userInfo)
 			.endAll()
 			.then(function() {
@@ -56,7 +56,9 @@ var seleniumSetup = function(state, submittedUserInfo) {
 			userInfo = submittedUserInfo;
 		}
 
-		selenium.start(seleniumCallback);
+		selenium.start({
+			seleniumArgs: ["-Dphantomjs.binary.path=" + phantomPath]
+		},seleniumCallback);
 	});
 };
 
