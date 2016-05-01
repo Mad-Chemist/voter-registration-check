@@ -3,7 +3,15 @@
   "version": "0.0.0",
   "description": "Selenium based driver to check voter registration",
   "main": "app/main/main.js",
-  "author": "Vico Bertogli III",
+  "author": {
+    "name": "Vico Bertogli III",
+    "email": "th@css.expert",
+    "url": "http://www.css.expert/"
+  },
+  "contributors": [
+    "Vico Bertogli III <th@css.expert> (https://github.com/mad-chemist)",
+    "Francis Kabinoff <francis.kabinoff@gmail.com> (https://github.com/fkabinoff)"
+  ],
   "license": "MIT",
   "devDependencies": {
     "selenium-standalone": "^5.1.0",
