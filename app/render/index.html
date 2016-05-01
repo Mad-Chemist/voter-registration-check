@@ -5,9 +5,16 @@
 	<meta charset="UTF-8">
 	<title>Hello World!</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
-	<!-- <script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script> -->
 	<style>
+		.middled {
+			position: absolute;
+			top: 50%;
+			left:50%;
+			-webkit-transform: translateY(-50%) translateX(-50%);
+			-ms-transform: translateY(-50%) translateX(-50%);
+			transform: translateY(-50%) translateX(-50%);
+		}
+
 		body {
 			app-region: drag;
 			-webkit-app-region: drag;
@@ -21,6 +28,10 @@
 		}
 		form .bg-primary {
 			padding:.75em .25em;
+		}
+		.disabled {
+			pointer-events: none;
+			opacity: 0.75;
 		}
 	</style>
 </head>
@@ -41,6 +52,7 @@
 			<label for="party">Party</label>
 			<select class="form-control" id="party" placeholder="Choose your party" disabled>
 				<option value="Democrat">Democrat</option>
+				<option value="Republican">Republican</option>
 			</select>
 		</div>
 		<div class="form-group col-sm-12">
@@ -64,70 +76,7 @@
 		</div>
 	</form>
 </div>
-
-<script>
-	var LS_VOTER = 'voter';
-	var $ = require('jquery');
-	var electron = require('electron');
-	$(document).ready(function() {
-		function prePopuplate() {
-			if (localStorage[LS_VOTER].length > 0) {
-				var dataObj = JSON.parse(localStorage[LS_VOTER]);
-				Object.keys(dataObj).forEach(function(key) {
-					if ($('#' + key)) {
-						$('#' + key).val(dataObj[key]);
-					}
-				});
-			}
-		}
-
-		function formValidation() {
-			var passes = true;
-			$('form input').each(function() {
-				$(this).css('border', '');
-				if ($(this).val() === "" || $(this).is('#birthdate') && $(this).val().split('/').length !== 3) {
-					passes = false
-					$(this).css('border', '1px red solid');
-				}
-			});
-			return passes;
-		}
-
-		function extractFormObject() {
-			var data = {};
-			
-			$('form input').each(function() {
-				data[$(this).attr('id')] = $(this).val();
-			});
-
-			localStorage[LS_VOTER] = JSON.stringify(data);
-			return data;
-		}
-
-		function displayVoterStatus(event, status) {
-			var $container = $('.container-fluid');
-			var message = status ? "You are registered Democrat" : "You are not registered.";
-			var template = '<h4 id="resolution" class="text-center"></h4>';
-			
-			$container.find('form').hide();
-			$container.find('#resolution').remove();
-			$container.append(template);
-			$container.find('#resolution')
-				.addClass(status ? "bg-success" : "bg-error")
-				.text(message);
-		}
-
-		$('form').on('submit', function(event) {
-			event.preventDefault();
-			if (formValidation() === true) {
-				electron.ipcRenderer.send('save-voter', extractFormObject());
-			}
-		});
-
-		electron.ipcRenderer.on('display-status', displayVoterStatus);
-		prePopuplate();
-	});
-</script>
+<script src="./index.js"></script>
 </body>
 
 </html>
