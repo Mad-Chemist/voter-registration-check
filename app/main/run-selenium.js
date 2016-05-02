@@ -21,7 +21,7 @@ var seleniumCallback = function(error, child, state, userInfo, callback) {
 	}
 	else {
 		try {
-			var options = { desiredCapabilities: { browserName: 'phantomjs' } };
+			var options = { desiredCapabilities: { browserName: 'phantomjs', 'phantomjs.binary.path': phantomPath } };
 			var client = webdriverio.remote(options);
 			var promise = state.verifyRegistration(client.init(), userInfo);
 
@@ -55,7 +55,7 @@ var seleniumSetup = function(submittedUserInfo, callback) {
 
 		// This path may need to be tweaked in built app, not positive
 		selenium.start({
-			seleniumArgs: ["-Dphantomjs.binary.path=" + phantomPath]
+			//seleniumArgs: ["-Dphantomjs.binary.path=" + phantomPath]
 		}, function(error, child) {
 			// TODO, try to minimize complexity of what is being passed here
 			seleniumCallback(error, child, state, submittedUserInfo, callback);
