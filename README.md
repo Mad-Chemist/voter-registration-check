@@ -7,6 +7,10 @@ cd voter-registration-check
 
 npm install
 
+cd ./app
+
+npm install
+
 # For testing without app build
 
 npm start
