@@ -8,75 +8,85 @@ const selenium = require('selenium-standalone');
 const webdriverio = require('webdriverio');
 var phantomPath = require('phantomjs-prebuilt').path;
 
-// TODO: Simplify structure below
-
-var seleniumCallback = function(error, child, state, userInfo, callback) {
-	if (error) {
-		var errMsg = error.toString();
-		callback('display-error', errMsg);
-
-		if (child) {
-			child.kill();
-		}
+var seleniumSetup = function(voterInfo, callback) {
+	if (!voterInfo || typeof voterInfo['state'] !== "string" || typeof callback !== "function") {
+		throw new Error("Cannot look voter up if no voterInfo or callback provided.");
 	}
-	else {
-		try {
-			var options = { desiredCapabilities: { browserName: 'phantomjs' } };
-			var client = webdriverio.remote(options);
-			var promise = state.verifyRegistration(client.init(), userInfo);
 
-			promise.then(function(status) {
-				callback('display-status', status);
+	var seleniumRunner = {
+		install: function() {
+			// Runs selenium.install, then triggers start
+			var complete = seleniumRunner.start;
+			var settings = {
+				baseURL: 'https://selenium-release.storage.googleapis.com',
+				drivers: {
+					chrome: {
+						arch: process.arch,
+						baseURL: 'https://chromedriver.storage.googleapis.com'
+					},
+					ie: {
+						arch: process.arch,
+						baseURL: 'https://selenium-release.storage.googleapis.com'
+					}
+				}
+			};
 
-				client.endAll()
-					.then(function() {
-						child.kill();
-					});
+			selenium.install(settings, complete);
+		},
+		start: function() {
+			// Runs selenium.start, then hooks into afterStart
+			var afterStart = seleniumRunner.afterStart;
+			var settings = {
+				seleniumArgs: ["-Dphantomjs.binary.path=" + phantomPath]
+			};
+			selenium.start(settings, function(error, child) {
+				afterStart(error, child);
 			});
-
-		} catch (error) {
-			callback('display-error', error);
+		},
+		error: function(error, child) {
+			// If error occurs during start, show error and kill child
+			if (typeof error !== "string") {
+				error = error.toString();
+			}
 
 			if (child) {
 				child.kill();
 			}
-		}
-	}
-};
 
-var seleniumSetup = function(submittedUserInfo, callback) {
-	var complete = function() {
-		if (!submittedUserInfo || typeof submittedUserInfo['state'] !== "string") {
-			throw new Error("Cannot look voter up if no submittedUserInfo provided.");
-		}
-
-		// Dynamically pulls from states
-		var state = require('./states/' +submittedUserInfo['state'].toLowerCase());
-
-		// This path may need to be tweaked in built app, not positive
-		selenium.start({
-			seleniumArgs: ["-Dphantomjs.binary.path=" + phantomPath]
-		}, function(error, child) {
-			// TODO, try to minimize complexity of what is being passed here
-			seleniumCallback(error, child, state, submittedUserInfo, callback);
-		});
-	};
-
-	var settings = {
-		baseURL: 'https://selenium-release.storage.googleapis.com',
-		drivers: {
-			chrome: {
-				arch: process.arch,
-				baseURL: 'https://chromedriver.storage.googleapis.com'
-			},
-			ie: {
-				arch: process.arch,
-				baseURL: 'https://selenium-release.storage.googleapis.com'
+			callback('display-error', error);
+			return error;
+		},
+		afterStart: function(error, child) {
+			// After starting selenium, try to run chosen state's script
+			if (error) {
+				seleniumRunner.error(error, child);
 			}
+			else {
+				try {
+					var state = require('./states/' + voterInfo['state'].toLowerCase()); // Dynamically pulls from states
+					var client = webdriverio.remote({
+						desiredCapabilities: { 
+							browserName: 'phantomjs'
+						} 
+					});
+					
+					state.verifyRegistration(client.init(), voterInfo)
+						.then(function(status) {
+							callback('display-status', status);
+							client.endAll()
+								.then(function() {
+									child.kill();
+								});
+						});
+				}
+				catch (error) {
+					seleniumRunner.error(error, child);
+				}
+			}	
 		}
 	};
 
-	selenium.install(settings, complete);
+	return seleniumRunner.install();
 };
 
 module.exports = {
