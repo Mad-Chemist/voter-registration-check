@@ -15,6 +15,7 @@ app.on('window-all-closed', function() { // Quit when all windows are closed.
 	}
 });
 
+// TODO: Look into handling close event and enabling a way for user to close window
 app.on('ready', function() {
 	window = new BrowserWindow({ frame: false, resizable: false, width: 800, height: 600 }); // Create the browser window.
 	window.loadURL('file://' + __dirname + '/../render/index.html'); // and load the index.html of the app.
@@ -25,7 +26,7 @@ app.on('ready', function() {
 			function callback(ch, ms) {
 				event.sender.send(ch, ms);
 			}
-			seleniumRunner.init(null, voterInfo, callback);
+			seleniumRunner.init(voterInfo, callback);
 		});
 
 	window.on('closed', function() {

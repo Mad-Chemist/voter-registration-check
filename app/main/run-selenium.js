@@ -4,19 +4,13 @@
 
 'use strict';
 
-const state = require('./states/indiana.js');
 const selenium = require('selenium-standalone');
 const webdriverio = require('webdriverio');
 var phantomPath = require('phantomjs-prebuilt').path;
 
-var userInfo = {
-	'county': 'Knox',
-	'firstName': 'John',
-	'lastName': 'Gregg',
-	'birthdate': '09/06/1954'
-};
+// TODO: Simplify structure below
 
-var seleniumCallback = function(error, child, callback) {
+var seleniumCallback = function(error, child, state, userInfo, callback) {
 	if (error) {
 		var errMsg = error.toString();
 		callback('display-error', errMsg);
@@ -50,16 +44,21 @@ var seleniumCallback = function(error, child, callback) {
 	}
 };
 
-var seleniumSetup = function(state, submittedUserInfo, callback) {
+var seleniumSetup = function(submittedUserInfo, callback) {
 	var complete = function() {
-		if (submittedUserInfo) {
-			userInfo = submittedUserInfo;
+		if (!submittedUserInfo || typeof submittedUserInfo['state'] !== "string") {
+			throw new Error("Cannot look voter up if no submittedUserInfo provided.");
 		}
 
+		// Dynamically pulls from states
+		var state = require('./states/' +submittedUserInfo['state'].toLowerCase());
+
+		// This path may need to be tweaked in built app, not positive
 		selenium.start({
 			seleniumArgs: ["-Dphantomjs.binary.path=" + phantomPath]
 		}, function(error, child) {
-			seleniumCallback(error, child, callback);
+			// TODO, try to minimize complexity of what is being passed here
+			seleniumCallback(error, child, state, submittedUserInfo, callback);
 		});
 	};
 

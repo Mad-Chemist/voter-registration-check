@@ -10,6 +10,13 @@ const INFO = {
 	'expectedStatus':'Registered'
 };
 
+var user = {
+	'county': 'Knox',
+	'firstName': 'John',
+	'lastName': 'Gregg',
+	'birthdate': '09/06/1954'
+};
+
 var verifyRegistration = function(client, user) {
 	return Q.promise(function(resolve, reject) {
 		client
