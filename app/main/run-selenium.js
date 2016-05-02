@@ -2,6 +2,8 @@
   * Made to accept userInfo input and state vars, and pass them along to dynamically run selenium script
   */
 
+'use strict';
+
 const state = require('./states/indiana.js');
 const selenium = require('selenium-standalone');
 const webdriverio = require('webdriverio');
@@ -16,27 +18,34 @@ var userInfo = {
 
 var seleniumCallback = function(error, child, callback) {
 	if (error) {
-		console.error(error);
-	}
+		var errMsg = error.toString();
+		callback('display-error', errMsg);
 
-	try {
-		var options = { desiredCapabilities: { browserName: 'phantomjs' } };
-		var client = webdriverio.remote(options);
-		var promise = state.verifyRegistration(client.init(), userInfo);
-
-		promise.then(function(status) {
-			callback('display-status', status);
-
-			client.endAll()
-				.then(function() {
-					child.kill();
-				});
-		});
-
-	} catch (error) {
-		console.log('Error ~ ', error);
 		if (child) {
 			child.kill();
+		}
+	}
+	else {
+		try {
+			var options = { desiredCapabilities: { browserName: 'phantomjs' } };
+			var client = webdriverio.remote(options);
+			var promise = state.verifyRegistration(client.init(), userInfo);
+
+			promise.then(function(status) {
+				callback('display-status', status);
+
+				client.endAll()
+					.then(function() {
+						child.kill();
+					});
+			});
+
+		} catch (error) {
+			callback('display-error', error);
+
+			if (child) {
+				child.kill();
+			}
 		}
 	}
 };
@@ -49,8 +58,7 @@ var seleniumSetup = function(state, submittedUserInfo, callback) {
 
 		selenium.start({
 			seleniumArgs: ["-Dphantomjs.binary.path=" + phantomPath]
-		},
-		function(error, child) {
+		}, function(error, child) {
 			seleniumCallback(error, child, callback);
 		});
 	};

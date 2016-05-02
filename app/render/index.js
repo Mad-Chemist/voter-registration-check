@@ -3,6 +3,16 @@ var $ = require('jquery');
 var electron = require('electron');
 
 $(document).ready(function() {
+	function displayError(event, message) {
+		message = message || "There was an error";
+		console.error(message);
+		$('form').removeClass('disabled')
+			.show();
+
+		$('form').find('.error')
+			.text(message);
+	}
+
 	function prePopuplate() {
 		if (localStorage[LS_VOTER].length > 0) {
 			var dataObj = JSON.parse(localStorage[LS_VOTER]);
@@ -69,6 +79,7 @@ $(document).ready(function() {
 		}
 	});
 
+	electron.ipcRenderer.on('display-error', displayError);
 	electron.ipcRenderer.on('display-status', displayVoterStatus);
 	prePopuplate();
 });

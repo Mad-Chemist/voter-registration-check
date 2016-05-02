@@ -6,15 +6,6 @@
 	<title>Hello World!</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<style>
-		.middled {
-			position: absolute;
-			top: 50%;
-			left:50%;
-			-webkit-transform: translateY(-50%) translateX(-50%);
-			-ms-transform: translateY(-50%) translateX(-50%);
-			transform: translateY(-50%) translateX(-50%);
-		}
-
 		body {
 			app-region: drag;
 			-webkit-app-region: drag;
@@ -32,6 +23,23 @@
 		}
 		form .bg-primary {
 			padding:.75em .25em;
+		}
+
+		/*
+		 * General CSS classes 
+		 */
+
+		.error:empty {
+			display:none;
+		}
+
+		.middled {
+			position: absolute;
+			top: 50%;
+			left:50%;
+			-webkit-transform: translateY(-50%) translateX(-50%);
+			-ms-transform: translateY(-50%) translateX(-50%);
+			transform: translateY(-50%) translateX(-50%);
 		}
 		.disabled {
 			pointer-events: none;
@@ -74,6 +82,9 @@
 		<div class="form-group col-sm-12">
 			<label for="birthdate">Birthdate (MM/DD/YYYY)</label>
 			<input type="text" class="form-control" id="birthdate" placeholder="Birthdate">
+		</div>
+		<div class="col-sm-12">
+			<div class="alert alert-danger error" role="alert"></div>
 		</div>
 		<div class="form-group col-sm-12">
 			<button type="submit" class="btn btn-primary">Verify</button>

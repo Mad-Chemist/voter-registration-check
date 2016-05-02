@@ -1,5 +1,5 @@
 # voter-registration-check
-![Demo](https://raw.githubusercontent.com/Mad-Chemist/voter-registration-check/master/assets/voter-reg.gif)
+~revise at some point
 
 #Setup
 
@@ -7,19 +7,21 @@ cd voter-registration-check
 
 npm install
 
+# For testing without app build
 
-# Run selenium script once manually
-node index.js
+npm start
 
+# Packaging application
 
-# For testing, build with electron
+npm run build
 
-./node_modules/.bin/electron .
+# Reset PhantomJS / Selenium (Tested on Mac only)
 
+npm run reset
 
 # Known ToDos:
 
-* Use Electron to generate exe / dmg / app files to run application on click
+* -Use Electron to generate exe / dmg / app files to run application on click-
   * Ideally application would just be an icon in taskbar, option to update voter information would spawn current spawn-form.js
   * Ideally application would run on state's script on a timer, and throw notification if user becomes unregistered
 * spawn-form.js
