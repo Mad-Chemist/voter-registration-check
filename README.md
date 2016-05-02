@@ -21,7 +21,8 @@ npm run reset
 
 # Known ToDos:
 
-* -Use Electron to generate exe / dmg / app files to run application on click-
+* Fix build issues
+  * Right now the built Darwin.app (Mac OSX) does not properly launch Selenium / PhantomJS, causing a stale state that needs reset by running npm run reset
   * Ideally application would just be an icon in taskbar, option to update voter information would spawn current spawn-form.js
   * Ideally application would run on state's script on a timer, and throw notification if user becomes unregistered
 * spawn-form.js
