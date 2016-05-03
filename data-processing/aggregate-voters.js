@@ -55,3 +55,4 @@ scrapeAllPoliticalStrategies(1,10);
 // http://mlab.com
 // @TODO: Add some more subsrting processing so it doesn't save every single thing on the html page. It's taking up too much space.
 // @TODO: Make it run synchronously, not asynchronously. Async seems to cause it to crash when trying to scrape 100,000 webpages.
+// @TODO: GetPeopleSearch (#3) on the Intellius API returns Date Of Birth. Try doing that before scraping Intellius.
