@@ -6,22 +6,34 @@ const electron = require('electron');
 const app = electron.app; // Module to control application life.
 const BrowserWindow = electron.BrowserWindow; // Module to create native browser window.
 const seleniumRunner = require('./run-selenium.js');
-var window = null; // Keep a global reference of the window object, if you don't, the window will be closed automatically when the JavaScript object is garbage collected.
 
+var window = null; // Keep a global reference of the window object, if you don't, the window will be closed automatically when the JavaScript object is garbage collected.
 app.on('window-all-closed', function() { // Quit when all windows are closed.
 	// On OS X it is common for applications and their menu bar to stay active until the user quits explicitly with Cmd + Q
-	if (process.platform != 'darwin') {
+	if (process.platform !== 'darwin') {
 		app.quit();
 	}
 });
 
 // TODO: Look into handling close event and enabling a way for user to close window
 app.on('ready', function() {
-	window = new BrowserWindow({ frame: false, resizable: false, width: 800, height: 600 }); // Create the browser window.
+	// Create the browser window.
+	window = new BrowserWindow({ 
+		frame: false,
+		resizable: false,
+		width:800,
+		height:450,
+		center:true,
+		title:"Voter Registration Check"
+	});
 	window.loadURL('file://' + __dirname + '/../render/index.html'); // and load the index.html of the app.
 	// window.webContents.openDevTools(); // Open the DevTools.
 
-	electron.ipcMain.on('close-window', window.close)
+	electron.ipcMain
+		.on('close-window', function() {
+			window.close;
+			app.quit();
+		})
 		.on('save-voter', function(event, voterInfo) {
 			function callback(ch, ms) {
 				event.sender.send(ch, ms);

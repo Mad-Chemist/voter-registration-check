@@ -10,7 +10,8 @@ $(document).ready(function() {
 			this.$el.on('submit', function(event) {
 				event.preventDefault();
 				if (that.validate() === true) {
-					that.$el.addClass('disabled')
+					that.$el.find('.panel-body')
+						.addClass('disabled')
 						.find(':focus')
 						.blur();
 
@@ -55,7 +56,8 @@ $(document).ready(function() {
 		displayError: function(event, message) {
 			message = message || "There was an error";
 			console.error(message);
-			$('form').removeClass('disabled')
+			$('form').find('.panel-body')
+				.removeClass('disabled')
 				.show();
 
 			$('form').find('.error')
@@ -65,6 +67,10 @@ $(document).ready(function() {
 		}
 	};
 
+	$('#close-BTN').click(function(event) {
+		electron.ipcRenderer.send('close-window', 'foo');
+	})
+
 	function displayVoterStatus(event, status) {
 		var formData = form.extract();
 
@@ -73,19 +79,14 @@ $(document).ready(function() {
 		var className = status ? "success" : "error";
 
 		var template = `
-			<div id="resolution" class="middled panel text-center panel-${className}">
-				<div class="panel-heading">
-					<h3 class="panel-title">${formData.party} registration status</h3>
-				</div>
-				<div class="panel-body">
-					${formData.firstName} ${formData.lastName} is ${message} ${formData.party}.
-				</div>
+			<div id="resolution" class="text-center bg-${className}">
+					<p>${formData.firstName} ${formData.lastName} is ${message} ${formData.party}.</p>
 			</div>
 		`;
 		
-		form.$el.hide();
-		$container.find('#resolution').remove();
-		$container.append(template);
+		form.$el.find('.panel-body').hide();
+		form.$el.find('#resolution').remove();
+		form.$el.append(template);
 	}
 
 	electron.ipcRenderer.on('display-error', form.displayError);

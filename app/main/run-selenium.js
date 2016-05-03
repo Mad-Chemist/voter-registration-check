@@ -36,12 +36,7 @@ var seleniumSetup = function(voterInfo, callback) {
 		start: function() {
 			// Runs selenium.start, then hooks into afterStart
 			var afterStart = seleniumRunner.afterStart;
-			var settings = {
-				seleniumArgs: ["-Dphantomjs.binary.path=" + phantomPath]
-			};
-			selenium.start(settings, function(error, child) {
-				afterStart(error, child);
-			});
+			selenium.start(afterStart);
 		},
 		error: function(error, child) {
 			// If error occurs during start, show error and kill child
@@ -65,8 +60,9 @@ var seleniumSetup = function(voterInfo, callback) {
 				try {
 					var state = require('./states/' + voterInfo['state'].toLowerCase()); // Dynamically pulls from states
 					var client = webdriverio.remote({
-						desiredCapabilities: { 
-							browserName: 'phantomjs'
+						'desiredCapabilities': { 
+							'browserName': 'phantomjs',
+							'phantomjs.binary.path': phantomPath
 						} 
 					});
 					
