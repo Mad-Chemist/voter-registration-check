@@ -1,5 +1,5 @@
 # voter-registration-check
-~revise at some point
+![Voter Registration Check](https://raw.githubusercontent.com/Mad-Chemist/voter-registration-check/master/assets/voter-reg.gif)
 
 #Setup
 
