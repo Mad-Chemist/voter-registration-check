@@ -30,13 +30,11 @@ var makeRawPoliticalStrategy = function(inputHtml, inputVoterNum) {
 var scrapePoliticalStrategies = function(voterNum, callback) {
     request('http://www.politicalstrategies.com/voter/' + voterNum, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            // var regExHtml = new RegExp('<div class="outerwrapper">(.*?)<script', 'g');
-            var regExHtml = new RegExp('outerwrapper(.*?)page', 'g'); // Working on this
-            var inputHtml = regExHtml.exec(body);
+            var inputHtml = body.substring(body.search('outerwrapper'), body.search('Footer'));
 
-            console.log(inputHtml);
+            callback(inputHtml, voterNum);
 
-            //callback(inputHtml, voterNum);
+            // console.log('Scraped HTML: ' + voterNum);
         }
     });
 };
@@ -49,10 +47,11 @@ var scrapeAllPoliticalStrategies = function(firstVoter, lastVoter) {
 }
 
 // Max is around 57000000, around half the total number of registered voters in the US
-scrapeAllPoliticalStrategies(1,1);
+scrapeAllPoliticalStrategies(1,10);
 
 
 // https://iservices.intelius.com/premier/search.php?componentId=1&qf=Anthony&qn=Erjavec&qcs=Cleveland%2C+OH
 // http://www.politicalstrategies.com/voter/57000000
 // http://mlab.com
-// @TODO: Add some regex so it doesn't save every single thing on the html page. It's taking up too much space.
+// @TODO: Add some more subsrting processing so it doesn't save every single thing on the html page. It's taking up too much space.
+// @TODO: Make it run synchronously, not asynchronously. Async seems to cause it to crash when trying to scrape 100,000 webpages.
