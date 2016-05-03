@@ -1,0 +1,20 @@
+{
+    "regSiteUrl": "https://indianavoters.in.gov/PublicSite/Public/FT1/PublicLookupMain.aspx?Link=Registration",
+    "voterInfo": {
+        "countyName": "Knox",
+        "county": "454fd305-fa46-4c8b-8698-9b9cb4685497",
+        "firstName": "John",
+        "lastName": "Gregg",
+        "birthdate": "09/06/1954"
+    },
+    "selectors": {
+        "county":"#ctl00_ContentPlaceHolder1_usrCounty_cboCounty",
+        "firstName":"#ctl00_ContentPlaceHolder1_txtFirst",
+        "lastName":"#ctl00_ContentPlaceHolder1_txtLast",
+        "birthdate":"#ctl00_ContentPlaceHolder1_usrDOB_txtDate",
+        "submit": "[name='ctl00$ContentPlaceHolder1$btnSearch']",
+        "registrationStatus":"#ctl00_ContentPlaceHolder1_lblStatus",
+        "expectedStatus":"Registered",
+        "voterName": "#ctl00_ContentPlaceHolder1_lblVoterName"
+    }
+}
