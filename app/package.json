@@ -1,7 +1,7 @@
 {
-  "name": "prch",
+  "name": "Voter-Registration-Check",
   "version": "1.0.0",
-  "description": "Political Registration CHeck ~ A selenium driven application to assist in checking voter registration status.",
+  "description": "Political Registration Check ~ A selenium driven application to assist in checking voter registration status.",
   "main": "main/main.js",
   "author": {
     "name": "Vico Bertogli III",

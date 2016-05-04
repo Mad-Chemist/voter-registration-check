@@ -1,7 +1,7 @@
 {
-  "name": "buildPrch",
+  "name": "Build-Voter-Registration-Check",
   "version": "1.0.0",
-  "description": "Selenium based driver to check voter registration",
+  "description": "Builds an electron project",
   "main": "build.js",
   "author": {
     "name": "Vico Bertogli III",
@@ -14,12 +14,18 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "electron-packager": "6.0.0"
+    "electron-builder": "^3.16.1",
+    "electron-prebuilt": "^0.37.8"
+  },
+  "build": {},
+  "directories": {
+    "app": "./app"
   },
   "scripts": {
+    "postinstall": "install-app-deps",
     "start": "./app/node_modules/.bin/electron ./app",
-    "reset":"pkill -f selenium-standalone",
-    "build": "node build.js",
-    "dist": "node build.js"
+    "reset": "pkill -f selenium-standalone",
+    "build": "node electron-build.js",
+    "dist": "node electron-build.js"
   }
 }
