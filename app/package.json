@@ -12,7 +12,7 @@
     "Vico Bertogli III <th@css.expert> (https://github.com/mad-chemist)",
     "Francis Kabinoff <francis.kabinoff@gmail.com> (https://github.com/fkabinoff)"
   ],
-  "license": "MIT",
+  "license": "MPL-2.0",
   "devDependencies": {
     "selenium-standalone": "^5.1.0",
     "webdriverio": "^4.0.5",
