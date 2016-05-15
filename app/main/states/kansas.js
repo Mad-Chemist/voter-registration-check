@@ -1,7 +1,4 @@
 const Q = require('q');
-<<<<<<< HEAD
-
-=======
 const URL = "https://myvoteinfo.voteks.org/VoterView/RegistrantSearch.do";
 const INFO = {
         'firstName':'#nameFirst',
@@ -51,13 +48,9 @@ var verifyRegistration = function(client, user) {
 				resolve(INFO['expectedStatus'] === value.trim());
 			});
 	});
->>>>>>> upstream/master
 };
 
 module.exports = {
 	verifyRegistration:verifyRegistration
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> upstream/master
+
