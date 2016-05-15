@@ -1,5 +1,6 @@
 const Q = require('q');
 const URL = "https://myvoteinfo.voteks.org/VoterView/RegistrantSearch.do";
+const NAME = 'Kansas';
 const INFO = {
         'firstName':'#nameFirst',
         'lastName':'#nameLast',
@@ -39,8 +40,8 @@ var verifyRegistration = function(client, user) {
 			.setValue(INFO['firstName'], user['firstName'])
 			.setValue(INFO['lastName'], user['lastName'])
 			.selectByValue(INFO['dobMonth'], user['dobMonth'])
-            .selectByValue(INFO['dobYear'], user['dobYear'])
-            .selectByValue(INFO['dobDay'], user['dobDay'])
+                        .selectByValue(INFO['dobYear'], user['dobYear'])
+                        .selectByValue(INFO['dobDay'], user['dobDay'])
 			.click(INFO['submit'])
 			.waitForExist(INFO['status'], 5000)
 			.getText(INFO['status'])
@@ -51,6 +52,8 @@ var verifyRegistration = function(client, user) {
 };
 
 module.exports = {
-	verifyRegistration:verifyRegistration
+	verifyRegistration:verifyRegistration,
+        user:user,
+        name:NAME
 };
 

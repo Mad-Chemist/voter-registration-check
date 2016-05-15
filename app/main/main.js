@@ -27,7 +27,7 @@ app.on('ready', function() {
 		title:"Voter Registration Check"
 	});
 	window.loadURL('file://' + __dirname + '/../render/index.html'); // and load the index.html of the app.
-	// window.webContents.openDevTools(); // Open the DevTools.
+	window.webContents.openDevTools(); // Open the DevTools.
 
 	electron.ipcMain
 		.on('close-window', function() {

@@ -1,20 +1,21 @@
+const selenium = require('selenium-standalone');
 const webdriverio = require('webdriverio');
 var phantomPath = require('phantomjs-prebuilt').path;
 
-const indiana = require('./indiana.js');
-const kansas = require('./kansas.js');
-const kentucky = require('./kentucky.js');
-const montana = require('./montana.js');
-const oregon = require('./oregon.js');
-const westVirginia = require('./west-virginia');
+const indiana = require('../main/states/indiana.js');
+const kansas = require('../main/states/kansas.js');
+const kentucky = require('../main/states/kentucky.js');
+const montana = require('../main/states/montana.js');
+const oregon = require('../main/states/oregon.js');
+const westVirginia = require('../main/states/west-virginia.js');
 
 var runTests = function() {
-    runStateTest(indiana)//, userIndiana);
-    runStateTest(kansas)//, userKansas);
-    runStateTest(kentucky)//, userKentucky);
-    runStateTest(montana)//, userMontana);
-    runStateTest(oregon)//, userOregon);
-    runStateTest(westVirginia)//, userWestVirginia);
+    runStateTest(indiana);
+    runStateTest(kansas);
+    runStateTest(kentucky);
+    runStateTest(montana);
+    runStateTest(oregon);
+    runStateTest(westVirginia);
 };
 
 var runStateTest = function(state) {

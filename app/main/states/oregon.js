@@ -1,5 +1,6 @@
 const Q = require('q');
 const URL = "https://secure.sos.state.or.us/orestar/vr/voterSearch.do";
+const NAME = 'Oregon';
 const INFO = {
 	'firstName':'#firstName',
 	'lastName':'#lastName',
@@ -32,5 +33,7 @@ var verifyRegistration = function(client, user) {
 };
 
 module.exports = {
-	verifyRegistration:verifyRegistration
+	verifyRegistration:verifyRegistration,
+	user:user,
+        name:NAME
 };

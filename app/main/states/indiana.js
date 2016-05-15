@@ -1,5 +1,6 @@
 const Q = require('q');
 const URL = "https://indianavoters.in.gov/PublicSite/Public/FT1/PublicLookupMain.aspx?Link=Registration";
+const NAME = 'Indiana';
 const INFO = {
 	'county':'#ctl00_ContentPlaceHolder1_usrCounty_cboCounty',
 	'firstName':'#ctl00_ContentPlaceHolder1_txtFirst',
@@ -35,5 +36,7 @@ var verifyRegistration = function(client, user) {
 };
 
 module.exports = {
-	verifyRegistration:verifyRegistration
+	verifyRegistration:verifyRegistration,
+	user:user,
+	name:NAME
 };
