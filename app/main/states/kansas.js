@@ -15,9 +15,7 @@ const INFO = {
 var user = {
     'firstName':'Anthony',
     'lastName':'St Aubin',
-    'dobMonth':'Sep',
-    'dobDay':'09',
-    'dobYear':'1993',
+    'birthdate':'09/09/1993',
     'expectedParty':'Democratic'
 };
 

@@ -15,34 +15,26 @@ var runTests = function() {
     var seleniumRunner = {
         install: function() {
             // Runs selenium.install, then triggers start
-            try {
-                var complete = seleniumRunner.start;
-                var settings = {
-                    baseURL: 'https://selenium-release.storage.googleapis.com',
-                    drivers: {
-                        chrome: {
-                            arch: process.arch,
-                            baseURL: 'https://chromedriver.storage.googleapis.com'
-                        },
-                        ie: {
-                            arch: process.arch,
-                            baseURL: 'https://selenium-release.storage.googleapis.com'
-                        }
+            var complete = seleniumRunner.start;
+            var settings = {
+                baseURL: 'https://selenium-release.storage.googleapis.com',
+                drivers: {
+                    chrome: {
+                        arch: process.arch,
+                        baseURL: 'https://chromedriver.storage.googleapis.com'
+                    },
+                    ie: {
+                        arch: process.arch,
+                        baseURL: 'https://selenium-release.storage.googleapis.com'
                     }
-                };
-                selenium.install(settings, complete);
-            } catch (error) {
-                seleniumRunner.error(error, child, "seleniumRunner.install");
-            }
+                }
+            };
+            selenium.install(settings, complete);
         },
         start: function() {
             // Runs selenium.start, then hooks into afterStart
-            try {
-                var afterStart = seleniumRunner.afterStart;
-                selenium.start(afterStart);
-            } catch (error) {
-                seleniumRunner.error(error, "", "seleniumRunner.start");
-            }
+            var afterStart = seleniumRunner.afterStart;
+            selenium.start(afterStart);
         },
         error: function(error, child, caller) {
             // If error occurs during start, show error and kill child
@@ -57,23 +49,24 @@ var runTests = function() {
         afterStart: function(error, child) {
             // After starting selenium, try to run chosen state's script
             if (error) {
-                    seleniumRunner.error(error, child, "seleniumRunner.afterStart");
-            }
-            else {
+                seleniumRunner.error(error, child, "seleniumRunner.afterStart");
+            } else {
                 runStateTest(indiana);
                 runStateTest(kansas);
                 runStateTest(kentucky);
                 runStateTest(montana);
                 runStateTest(oregon);
                 runStateTest(westVirginia);
-            }	
+            }
+            
+            //child.kill();
         }
     };
     
     seleniumRunner.install();
 };
 
-var runStateTest = function(state) {
+var runStateTest = function(state, child) {
     try {
         var client = webdriverio.remote({
             'desiredCapabilities': { 
