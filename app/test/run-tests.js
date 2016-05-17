@@ -40,7 +40,7 @@ var runStateTest = function(state) {
                 };
                 selenium.install(settings, complete);
             } catch (error) {
-                console.log(error);
+                seleniumRunner.error(error, child);
             }
         },
         start: function() {
@@ -80,7 +80,7 @@ var runStateTest = function(state) {
                         );
                 }
                 catch (error) {
-                    console.log(error.toString() + child.toString());
+                    seleniumRunner.error(error, child);
                 }
             }	
         }
