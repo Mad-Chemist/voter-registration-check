@@ -11,15 +11,7 @@ const westVirginia = require('../main/states/west-virginia.js');
 
 
 var runTests = function() {
-    runStateTest(indiana);
-    runStateTest(kansas);
-    runStateTest(kentucky);
-    runStateTest(montana);
-    runStateTest(oregon);
-    runStateTest(westVirginia);
-};
-
-var runStateTest = function(state) {
+    
     var seleniumRunner = {
         install: function() {
             // Runs selenium.install, then triggers start
@@ -40,15 +32,19 @@ var runStateTest = function(state) {
                 };
                 selenium.install(settings, complete);
             } catch (error) {
-                seleniumRunner.error(error, child);
+                seleniumRunner.error(error, child, "seleniumRunner.install");
             }
         },
         start: function() {
             // Runs selenium.start, then hooks into afterStart
-            var afterStart = seleniumRunner.afterStart;
-            selenium.start(afterStart);
+            try {
+                var afterStart = seleniumRunner.afterStart;
+                selenium.start(afterStart);
+            } catch (error) {
+                seleniumRunner.error(error, "", "seleniumRunner.start");
+            }
         },
-        error: function(error, child) {
+        error: function(error, child, caller) {
             // If error occurs during start, show error and kill child
             if (typeof error !== "string") {
                 error = error.toString();
@@ -56,37 +52,46 @@ var runStateTest = function(state) {
             if (child) {
                 child.kill();
             }
-            console.log(error);
+            console.log("From " + caller + " - " + error);
         },
         afterStart: function(error, child) {
             // After starting selenium, try to run chosen state's script
             if (error) {
-                    seleniumRunner.error(error, child);
+                    seleniumRunner.error(error, child, "seleniumRunner.afterStart");
             }
             else {
-                try {
-                    var client = webdriverio.remote({
-                        'desiredCapabilities': { 
-                            'browserName': 'phantomjs',
-                            'phantomjs.binary.path': phantomPath
-                        } 
-                    });
-                    
-                    state.verifyRegistration(client.init(), state.user)
-                        .then(
-                            function() { console.log(state.name + '\tpassed') },
-                            function() { console.log(state.name + '\tfailed') },
-                            function() { console.log(state.name + '\tprogress')}
-                        );
-                }
-                catch (error) {
-                    seleniumRunner.error(error, child);
-                }
+                runStateTest(indiana);
+                runStateTest(kansas);
+                runStateTest(kentucky);
+                runStateTest(montana);
+                runStateTest(oregon);
+                runStateTest(westVirginia);
             }	
         }
     };
     
     seleniumRunner.install();
+};
+
+var runStateTest = function(state) {
+    try {
+        var client = webdriverio.remote({
+            'desiredCapabilities': { 
+                'browserName': 'phantomjs',
+                'phantomjs.binary.path': phantomPath
+            } 
+        });
+        
+        state.verifyRegistration(client.init(), state.user)
+            .then(
+                function() { console.log(state.name + '\t\tpassed') },
+                function() { console.log(state.name + '\t\tfailed') },
+                function() { console.log(state.name + '\t\tprogress')}
+            );
+    }
+    catch (error) {
+        seleniumRunner.error(error, child);
+    }
     
 };
 
