@@ -25,12 +25,13 @@ npm run reset
 
 # Known ToDos:
 
-* Fix build issues
-  * Right now the built Darwin.app (Mac OSX) does not properly launch Selenium / PhantomJS, causing a stale state that needs reset by running npm run reset
-  * Ideally application would just be an icon in taskbar, option to update voter information would spawn current spawn-form.js
+
+* App Changes
+  * Ideally application would just be an icon in taskbar, option to update voter information would spawn current form
   * Ideally application would run on state's script on a timer, and throw notification if user becomes unregistered
-* spawn-form.js
-  * spawn-form.js always defaults to Indiana, need to take user input for state, check against files in states folder if available, and then use that state's script
-  * Need to handle close event more elegantly
+  * User should be able to manually check at all times
+  * Notify application updates when available
+* render/
   * Need to handle errors
   * Need to relay voter status through better means
+  * Show additional information after manual lookup, such as disenfranchisement numbers
