@@ -2,7 +2,7 @@
   "name": "Build-Voter-Registration-Check",
   "version": "1.0.0",
   "description": "Builds an electron project",
-  "main": "build.js",
+  "main": "electron-build.js",
   "author": {
     "name": "Vico Bertogli III",
     "email": "th@css.expert",

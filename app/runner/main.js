@@ -17,7 +17,7 @@ var closed = function() {
 electron.ipcMain
 	.on('close-window', closed)
 	.on('save-voter', function(event, voterInfo) {
-		let seleniumRunner = require('../runner/run-selenium.js');
+		let seleniumRunner = require('../wd.js');
 		function callback(channel, message) {
 			event.sender.send(channel, message);
 		}
@@ -37,7 +37,7 @@ app.on('ready', function() {
 			title:"Voter Registration Check"
 		});
 		window.loadURL('file://' + __dirname + '/../render/index.html'); // and load the index.html of the app.
-		// window.webContents.openDevTools(); // Open the DevTools.
+		window.webContents.openDevTools(); // Open the DevTools.
 
 		window.on('closed', closed);
 	}());
