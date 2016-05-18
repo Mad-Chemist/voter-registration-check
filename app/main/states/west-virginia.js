@@ -1,5 +1,6 @@
 const Q = require('q');
 const URL = "https://services.sos.wv.gov/Elections/Voter/AmIRegisteredToVote";
+const NAME = 'West Virginia';
 const INFO = {
 	'firstName':'#FirstName',
 	'lastName':'#LastName',
@@ -32,5 +33,7 @@ var verifyRegistration = function(client, user) {
 };
 
 module.exports = {
-	verifyRegistration:verifyRegistration
+	verifyRegistration:verifyRegistration,
+	user:user,
+        name:NAME
 };

@@ -1,5 +1,6 @@
 const Q = require('q');
 const URL = "https://app.mt.gov/cgi-bin/voterinfo/voterinfo.cgi";
+const NAME = 'Montana';
 const INFO = {
 	'firstName':'#firstName',
 	'lastName':'#lastName',
@@ -34,5 +35,7 @@ var verifyRegistration = function(client, user) {
 };
 
 module.exports = {
-	verifyRegistration:verifyRegistration
+	verifyRegistration:verifyRegistration,
+	user:user,
+        name:NAME
 };

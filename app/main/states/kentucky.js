@@ -1,5 +1,5 @@
 const Q = require('q');
-
+const NAME = 'Kentucky';
 const INFO = {
 	'status':'[name="ELIGIBLE FOR PRIMARY"]',
 	'expectedStatus':'Yes'
@@ -30,5 +30,7 @@ var verifyRegistration = function(client, user) {
 };
 
 module.exports = {
-	verifyRegistration:verifyRegistration
+	verifyRegistration:verifyRegistration,
+        user:user,
+        name:NAME
 };
